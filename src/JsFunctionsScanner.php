@@ -74,6 +74,7 @@ final class JsFunctionsScanner extends GettextJsFunctionsScanner {
 				$functions     = $options['functions'];
 				$file          = $options['file'];
 				$add_reference = ! empty( $options['addReferences'] );
+				$add_flags     = ! empty( $options['addFlags'] );
 
 				/** @var Node\Node $node */
 				foreach ( $node->getLeadingComments() as $comment ) {
@@ -182,8 +183,10 @@ final class JsFunctionsScanner extends GettextJsFunctionsScanner {
 				}
 
 				if (
-					1 === preg_match( MakePotCommand::SPRINTF_PLACEHOLDER_REGEX, $original ) ||
-					1 === preg_match( MakePotCommand::UNORDERED_SPRINTF_PLACEHOLDER_REGEX, $original )
+					$add_flags && (
+						1 === preg_match( MakePotCommand::SPRINTF_PLACEHOLDER_REGEX, $original ) ||
+						1 === preg_match( MakePotCommand::UNORDERED_SPRINTF_PLACEHOLDER_REGEX, $original )
+					)
 				) {
 					$translation->addFlag( 'js-format' );
 				}

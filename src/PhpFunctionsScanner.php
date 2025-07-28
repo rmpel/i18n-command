@@ -19,6 +19,7 @@ class PhpFunctionsScanner extends GettextPhpFunctionsScanner {
 		$functions     = $options['functions'];
 		$file          = $options['file'];
 		$add_reference = ! empty( $options['addReferences'] );
+		$add_flags     = ! empty( $options['addFlags'] );
 
 		foreach ( $this->getFunctions( $options['constants'] ) as $function ) {
 			list( $name, $line, $args ) = $function;
@@ -78,8 +79,10 @@ class PhpFunctionsScanner extends GettextPhpFunctionsScanner {
 			}
 
 			if (
-				1 === preg_match( MakePotCommand::SPRINTF_PLACEHOLDER_REGEX, $original ) ||
-				1 === preg_match( MakePotCommand::UNORDERED_SPRINTF_PLACEHOLDER_REGEX, $original )
+				$add_flags && (
+					1 === preg_match( MakePotCommand::SPRINTF_PLACEHOLDER_REGEX, $original ) ||
+					1 === preg_match( MakePotCommand::UNORDERED_SPRINTF_PLACEHOLDER_REGEX, $original )
+				)
 			) {
 				$translation->addFlag( 'php-format' );
 			}

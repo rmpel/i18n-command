@@ -100,6 +100,11 @@ class MakePotCommand extends WP_CLI_Command {
 	protected $location = true;
 
 	/**
+	 * @var bool
+	 */
+	protected $format_flags = true;
+
+	/**
 	 * @var array
 	 */
 	protected $headers = [];
@@ -334,6 +339,7 @@ class MakePotCommand extends WP_CLI_Command {
 		$this->file_comment    = Utils\get_flag_value( $assoc_args, 'file-comment' );
 		$this->package_name    = Utils\get_flag_value( $assoc_args, 'package-name' );
 		$this->location        = Utils\get_flag_value( $assoc_args, 'location', true );
+		$this->format_flags    = Utils\get_flag_value( $assoc_args, 'format-flags', true );
 
 		$ignore_domain = Utils\get_flag_value( $assoc_args, 'ignore-domain', false );
 
@@ -648,6 +654,7 @@ class MakePotCommand extends WP_CLI_Command {
 					'exclude'            => $this->exclude,
 					'extensions'         => [ 'php' ],
 					'addReferences'      => $this->location,
+					'addFlags'           => $this->format_flags,
 				];
 				PhpCodeExtractor::fromDirectory( $this->source, $translations, $options );
 			}
@@ -658,6 +665,7 @@ class MakePotCommand extends WP_CLI_Command {
 					'exclude'       => $this->exclude,
 					'extensions'    => [ 'blade.php' ],
 					'addReferences' => $this->location,
+					'addFlags'      => $this->format_flags,
 				];
 				BladeCodeExtractor::fromDirectory( $this->source, $translations, $options );
 			}
@@ -671,6 +679,7 @@ class MakePotCommand extends WP_CLI_Command {
 						'exclude'       => $this->exclude,
 						'extensions'    => [ 'js', 'jsx' ],
 						'addReferences' => $this->location,
+						'addFlags'      => $this->format_flags,
 					]
 				);
 
@@ -682,6 +691,7 @@ class MakePotCommand extends WP_CLI_Command {
 						'exclude'       => $this->exclude,
 						'extensions'    => [ 'map' ],
 						'addReferences' => $this->location,
+						'addFlags'      => $this->format_flags,
 					]
 				);
 			}
@@ -699,6 +709,7 @@ class MakePotCommand extends WP_CLI_Command {
 						'exclude'           => $this->exclude,
 						'extensions'        => [ 'json' ],
 						'addReferences'     => $this->location,
+						'addFlags'          => $this->format_flags,
 					]
 				);
 			}
@@ -716,6 +727,7 @@ class MakePotCommand extends WP_CLI_Command {
 						'exclude'           => $this->exclude,
 						'extensions'        => [ 'json' ],
 						'addReferences'     => $this->location,
+						'addFlags'          => $this->format_flags,
 					]
 				);
 
@@ -733,6 +745,7 @@ class MakePotCommand extends WP_CLI_Command {
 							'exclude'             => $this->exclude,
 							'extensions'          => [ 'json' ],
 							'addReferences'       => $this->location,
+							'addFlags'            => $this->format_flags,
 						]
 					);
 				}
